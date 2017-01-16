@@ -21,7 +21,7 @@ const mapDispatchToProps = (dispatch) => {
 class App extends Component {
   interval = null
 
-  elapse = () => {
+  elapseTime = () => {
     const { actions, pomodoro } = this.props
 
     if (pomodoro.playing) {
@@ -29,8 +29,12 @@ class App extends Component {
     }
   }
 
+  handleModeChange = mode => () => {
+    this.props.actions.changeMode(mode)
+  }
+
   componentDidMount = () => {
-    this.interval = setInterval(this.elapse, 1000)
+    this.interval = setInterval(this.elapseTime, 1000)
   }
 
   render = () => (
@@ -38,6 +42,12 @@ class App extends Component {
       <h1>{this.props.pomodoro.timer}</h1>
       <button onClick={this.props.actions.startTimer}>Start</button>
       <button onClick={this.props.actions.resetTimer}>Reset</button>
+
+      <hr />
+
+      <button onClick={this.handleModeChange('focus')}>Focus</button>
+      <button onClick={this.handleModeChange('short-break')}>Short Break</button>
+      <button onClick={this.handleModeChange('long-break')}>Long Break</button>
     </div>
   )
 }

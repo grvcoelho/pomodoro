@@ -14,7 +14,7 @@ const minutesByMode = {
 }
 
 export const changeMode = (mode) => {
-  const timer = minutesByMode * 60
+  const timer = minutesByMode[mode] * 60
 
   return {
     type: CHANGE_MODE,
