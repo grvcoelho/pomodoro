@@ -37,6 +37,7 @@ class App extends Component {
 
   handleModeChange = mode => () => {
     this.props.actions.changeMode(mode)
+    this.reset()
   }
 
   start = () => {
