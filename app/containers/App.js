@@ -11,14 +11,20 @@ const mapStateToProps = (state) => {
   }
 }
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    actions: bindActionCreators(actionCreators, dispatch)
-  }
-}
+const mapDispatchToProps = dispatch => ({
+  actions: bindActionCreators(actionCreators, dispatch)
+})
 
 @connect(mapStateToProps, mapDispatchToProps)
 class App extends Component {
+  componentDidMount = () => {
+    this.interval = setInterval(this.elapseTime, 1000)
+  }
+
+  componentWillUnmount = () => {
+    clearInterval(this.interval)
+  }
+
   interval = null
 
   elapseTime = () => {
@@ -33,15 +39,26 @@ class App extends Component {
     this.props.actions.changeMode(mode)
   }
 
-  componentDidMount = () => {
+  start = () => {
+    if (this.props.pomodoro.playing) {
+      return
+    }
+
+    this.props.actions.start()
+    clearInterval(this.interval)
     this.interval = setInterval(this.elapseTime, 1000)
+  }
+
+  reset = () => {
+    this.props.actions.reset()
+    clearInterval(this.interval)
   }
 
   render = () => (
     <div>
       <h1>{this.props.pomodoro.timer}</h1>
-      <button onClick={this.props.actions.start}>Start</button>
-      <button onClick={this.props.actions.reset}>Reset</button>
+      <button onClick={this.start}>Start</button>
+      <button onClick={this.reset}>Reset</button>
 
       <hr />
 
