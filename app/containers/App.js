@@ -40,8 +40,8 @@ class App extends Component {
   render = () => (
     <div>
       <h1>{this.props.pomodoro.timer}</h1>
-      <button onClick={this.props.actions.startTimer}>Start</button>
-      <button onClick={this.props.actions.resetTimer}>Reset</button>
+      <button onClick={this.props.actions.start}>Start</button>
+      <button onClick={this.props.actions.reset}>Reset</button>
 
       <hr />
 
