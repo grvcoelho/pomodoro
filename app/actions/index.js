@@ -14,7 +14,7 @@ const minutesByMode = {
 }
 
 export const changeMode = (mode) => {
-  const timer = minutesByMode * 60
+  const timer = minutesByMode[mode] * 60
 
   return {
     type: CHANGE_MODE,
@@ -29,7 +29,15 @@ export const resetTimer = () => ({
   type: RESET_TIMER
 })
 
-export const startTimer = () => ({
+export const reset = () => (dispatch, getState) => {
+  const state = getState()
+  const mode = state.pomodoro.mode
+
+  dispatch(resetTimer())
+  dispatch(changeMode(mode))
+}
+
+export const start = () => ({
   type: START_TIMER
 })
 
