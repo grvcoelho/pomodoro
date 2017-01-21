@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import * as actionCreators from '../actions'
+import { formatSeconds } from '../helpers'
 import Button from '../components/button'
 
 const mapStateToProps = (state) => {
@@ -62,7 +63,7 @@ class App extends Component {
 
   render = () => (
     <div>
-      <h1>{this.props.pomodoro.timer}</h1>
+      <h1>{formatSeconds(this.props.pomodoro.timer)}</h1>
 
       <Button onClick={this.start} disabled={this.props.pomodoro.playing}>Start</Button>
       <Button onClick={this.reset} disabled={!this.props.pomodoro.playing}>Reset</Button>
