@@ -41,6 +41,10 @@ class App extends Component {
     this.reset()
   }
 
+  isActive = mode =>
+    this.props.pomodoro.mode === mode
+
+
   start = () => {
     if (this.props.pomodoro.playing) {
       return
@@ -59,14 +63,32 @@ class App extends Component {
   render = () => (
     <div>
       <h1>{this.props.pomodoro.timer}</h1>
-      <Button onClick={this.start}>Start</Button>
-      <Button onClick={this.reset}>Reset</Button>
+
+      <Button onClick={this.start} disabled={this.props.pomodoro.playing}>Start</Button>
+      <Button onClick={this.reset} disabled={!this.props.pomodoro.playing}>Reset</Button>
 
       <hr />
 
-      <Button onClick={this.handleModeChange('focus')}>Focus</Button>
-      <Button onClick={this.handleModeChange('short-break')}>Short Break</Button>
-      <Button onClick={this.handleModeChange('long-break')} disabled>Long Break</Button>
+      <Button
+        onClick={this.handleModeChange('focus')}
+        disabled={this.isActive('focus')}
+      >
+        Focus
+      </Button>
+
+      <Button
+        onClick={this.handleModeChange('short-break')}
+        disabled={this.isActive('short-break')}
+      >
+        Short Break
+      </Button>
+
+      <Button
+        onClick={this.handleModeChange('long-break')}
+        disabled={this.isActive('long-break')}
+      >
+        Long Break
+      </Button>
     </div>
   )
 }
