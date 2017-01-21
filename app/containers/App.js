@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import * as actionCreators from '../actions'
+import { formatSeconds } from '../helpers'
+import Button from '../components/button'
 
 const mapStateToProps = (state) => {
   const { pomodoro } = state
@@ -40,6 +42,10 @@ class App extends Component {
     this.reset()
   }
 
+  isActive = mode =>
+    this.props.pomodoro.mode === mode
+
+
   start = () => {
     if (this.props.pomodoro.playing) {
       return
@@ -57,15 +63,33 @@ class App extends Component {
 
   render = () => (
     <div>
-      <h1>{this.props.pomodoro.timer}</h1>
-      <button onClick={this.start}>Start</button>
-      <button onClick={this.reset}>Reset</button>
+      <h1>{formatSeconds(this.props.pomodoro.timer)}</h1>
+
+      <Button onClick={this.start} disabled={this.props.pomodoro.playing}>Start</Button>
+      <Button onClick={this.reset} disabled={!this.props.pomodoro.playing}>Reset</Button>
 
       <hr />
 
-      <button onClick={this.handleModeChange('focus')}>Focus</button>
-      <button onClick={this.handleModeChange('short-break')}>Short Break</button>
-      <button onClick={this.handleModeChange('long-break')}>Long Break</button>
+      <Button
+        onClick={this.handleModeChange('focus')}
+        disabled={this.isActive('focus')}
+      >
+        Focus
+      </Button>
+
+      <Button
+        onClick={this.handleModeChange('short-break')}
+        disabled={this.isActive('short-break')}
+      >
+        Short Break
+      </Button>
+
+      <Button
+        onClick={this.handleModeChange('long-break')}
+        disabled={this.isActive('long-break')}
+      >
+        Long Break
+      </Button>
     </div>
   )
 }
