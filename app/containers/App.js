@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import * as actionCreators from '../actions'
+import Button from '../components/button'
 
 const mapStateToProps = (state) => {
   const { pomodoro } = state
@@ -58,14 +59,14 @@ class App extends Component {
   render = () => (
     <div>
       <h1>{this.props.pomodoro.timer}</h1>
-      <button onClick={this.start}>Start</button>
-      <button onClick={this.reset}>Reset</button>
+      <Button onClick={this.start}>Start</Button>
+      <Button onClick={this.reset}>Reset</Button>
 
       <hr />
 
-      <button onClick={this.handleModeChange('focus')}>Focus</button>
-      <button onClick={this.handleModeChange('short-break')}>Short Break</button>
-      <button onClick={this.handleModeChange('long-break')}>Long Break</button>
+      <Button onClick={this.handleModeChange('focus')}>Focus</Button>
+      <Button onClick={this.handleModeChange('short-break')}>Short Break</Button>
+      <Button onClick={this.handleModeChange('long-break')} disabled>Long Break</Button>
     </div>
   )
 }
